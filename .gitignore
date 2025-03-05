@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment directories
+venv/
+venvv/
+env/
+ENV/
+
+# Django stuff:
+*.log
+db.sqlite3
+
+# Migrations should be tracked, but ignore their __pycache__ folders:
+**/__pycache__/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+
+
+# Media uploads
+media/csv_uploads/
+
+
+#migirations
+filehandler/migrations/

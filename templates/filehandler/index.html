@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Processing Task</title>
+    <script>
+       
+        function checkTask(taskId) {
+            fetch(`/results/?task_id=${taskId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'SUCCESS') {
+                        displayResults(data.data);
+                    } else {
+                        setTimeout(() => checkTask(taskId), 2000);
+                    }
+                });
+        }
+
+        
+        function displayResults(resultData) {
+            let container = document.getElementById("results");
+            container.innerHTML = "<h3>Calculation Results</h3>";
+            if(resultData.error) {
+                container.innerHTML += `<p style="color: red;">${resultData.error}</p>`;
+                return;
+            }
+          
+            let calc = resultData.calculations;
+            let html = "<table border='1'><tr><th>Column</th><th>Sum</th><th>Average</th><th>Count</th></tr>";
+            for (let col in calc) {
+                html += `<tr>
+                            <td>${col}</td>
+                            <td>${calc[col].sum}</td>
+                            <td>${calc[col].average.toFixed(2)}</td>
+                            <td>${calc[col].count}</td>
+                         </tr>`;
+            }
+            html += "</table>";
+            let metrics = resultData.additional_metrics;
+            html += "<h4>Additional Metrics</h4><ul>";
+            for (let key in metrics) {
+                html += `<li>${key.replace(/_/g, " ")}: ${metrics[key]}</li>`;
+            }
+            html += "</ul>";
+            container.innerHTML += html;
+
+            
+            if(resultData.data && resultData.data.length > 0) {
+                document.getElementById('data-file-path').value = "/media/csv_uploads/Sample_CSV_Data.csv";
+            }
+        }
+
+      
+        function searchProduct() {
+            let product = document.getElementById("search-box").value;
+            let filePath = document.getElementById('data-file-path').value;
+            fetch(`/search/?product=${product}&file_path=${filePath}`)
+                .then(response => response.json())
+                .then(data => {
+                    let searchResults = document.getElementById("search-results");
+                    let html = "<h4>Search Results</h4>";
+                    if (data.data.length > 0) {
+                        html += "<table border='1'><tr>";
+                      
+                        Object.keys(data.data[0]).forEach(header => {
+                            html += `<th>${header}</th>`;
+                        });
+                        html += "</tr>";
+                        data.data.forEach(row => {
+                            html += "<tr>";
+                            Object.values(row).forEach(val => {
+                                html += `<td>${val}</td>`;
+                            });
+                            html += "</tr>";
+                        });
+                        html += "</table>";
+                    } else {
+                        html += "<p>No records found</p>";
+                    }
+                    searchResults.innerHTML = html;
+                });
+        }
+    </script>
+</head>
+<body>
+    <h2>Upload CSV File</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+    {% if message %}
+        <p style="color: green;">{{ message }}</p>
+        <script>
+           
+            checkTask("{{ task_id }}");
+        </script>
+    {% endif %}
+    
+    <div id="results"></div>
+    
+    <hr>
+    <h3>Search by Product Name</h3>
+    <input type="text" id="search-box" placeholder="Enter product name">
+    <button onclick="searchProduct()">Search</button>
+    <div id="search-results"></div>
+   
+    <input type="hidden" id="data-file-path" value="">
+</body>
+</html>
