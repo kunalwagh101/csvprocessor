@@ -40,15 +40,16 @@
 ```
 
 - **Run the redis**
-``` bash
+```
     redis-server
+```
 
     works on most systems
 
 - **Run Celery**
-```bash
+```
     celery -A csvprocessor worker -l info
-
+```
 
 - **Run the application**
 ```
@@ -56,9 +57,9 @@
 ```
 
 - **Open the below url on your browser**
-```bash 
+```
     http://127.0.0.1:8000/
-
+```
 
 ### You can also create a new super user with the following command and login with those credentials.
 ```
