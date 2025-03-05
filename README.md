@@ -42,11 +42,11 @@ git clone git@github.com:kunalwagh101/csvprocessor.git
     venv/Scripts/activate
 ```
 
-### Go inside the project folder
+### 2. Go inside the project folder
 
     cd  untill you see manage.py file 
 
-- **Install the necessary modules**
+- **1. Install the necessary modules**
 
 ```
     pip install -r requirements.txt
@@ -54,29 +54,29 @@ git clone git@github.com:kunalwagh101/csvprocessor.git
     
     
 
-- **1. If it shows error, run**
+- **2. If it shows error, run**
 ```
     pip install django
 ```
 
-- **2. Run the redis** - works on most systems
+- **3. Run the redis** - works on most systems
 ```
     redis-server
 ```
 
     
 
-- **3. Run Celery**
+- **4. Run Celery**
 ```
     celery -A csvprocessor worker -l info
 ```
 
-- **4. Run the application**
+- **5. Run the application**
 ```
     python manage.py runserver
 ```
 
-- **5. Open the below url on your browser**
+- **6. Open the below url on your browser**
 ```
     http://127.0.0.1:8000/
 ```
