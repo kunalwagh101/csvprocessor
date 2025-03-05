@@ -54,29 +54,29 @@ git clone git@github.com:kunalwagh101/csvprocessor.git
     
     
 
-- **If it shows error, run**
+- **1. If it shows error, run**
 ```
     pip install django
 ```
 
-- **Run the redis** - works on most systems
+- **2. Run the redis** - works on most systems
 ```
     redis-server
 ```
 
     
 
-- **Run Celery**
+- **3. Run Celery**
 ```
     celery -A csvprocessor worker -l info
 ```
 
-- **Run the application**
+- **4. Run the application**
 ```
     python manage.py runserver
 ```
 
-- **Open the below url on your browser**
+- **5. Open the below url on your browser**
 ```
     http://127.0.0.1:8000/
 ```
